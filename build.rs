@@ -197,13 +197,13 @@ mod regenerate {
         fn generate_parser<'i>(&self, arena: Arena<'i>) -> DocBuilder<'i> {
             match self {
                 Type::ErrorCode => arena.text("be_i16().and_then(|i| ErrorCode::try_from(i).map_err(StreamErrorFor::<I>::unexpected_static_message))"),
-                Type::ApiKey =>  arena.text("be_i16().map(|i| ApiKey::from(i))"),
+                Type::ApiKey => arena.text("be_i16().map(|i| ApiKey::from(i))"),
                 Type::Acks => arena.text("be_i16().and_then(|i| Acks::try_from(i).map_err(StreamErrorFor::<I>::unexpected_static_message))"),
                 Type::Int(s) => arena.text(format!(
                     "be_i{}()",
                     s
                 )),
-                Type::UInt(s)  => arena.text(format!(
+                Type::UInt(s) => arena.text(format!(
                     "be_u{}()",
                     s
                 )),
@@ -916,7 +916,7 @@ mod regenerate {
                     .as_ref()
                     .map_or(true, |f| rule.name.contains(f))
             })
-            .group_by(|rule| rule.name)
+            .group_by(|rule| format!("{}{}", rule.name, rule.version.unwrap_or_default()))
             .into_iter()
             .map(|(_, mut group)| {
                 let mut merged_rule = group.next().unwrap();
@@ -928,13 +928,14 @@ mod regenerate {
             .collect::<Vec<_>>();
         for rule in &rules {
             let parser = rule.as_parser_top();
-            let entry = calls
-                .entry(
-                    rule.name
-                        .trim_end_matches(" Request")
-                        .trim_end_matches(" Response"),
-                )
-                .or_default();
+            let key = format!(
+                "{}{}",
+                rule.name
+                    .trim_end_matches(" Request")
+                    .trim_end_matches(" Response"),
+                rule.version.unwrap_or_default()
+            );
+            let entry = calls.entry(key).or_default();
             if rule.name.ends_with("Request") {
                 entry.0 = Some(rule);
             } else {
@@ -942,22 +943,25 @@ mod regenerate {
             }
             let type_name = rule.name.replace(" ", "");
             let name = inflector::cases::snakecase::to_snake_case(&type_name);
+            let v = rule.version.map(|x| format!("_v{}", x)).unwrap_or_default();
+            let file_name = format!("{}{}", name, v);
             let mut out = io::BufWriter::new(
-                fs::File::create(format!("src/parser/{}.rs", name))
-                    .map_err(|err| format!("Unable to create module {}: {}", name, err))?,
+                fs::File::create(format!("src/parser/{}.rs", file_name))
+                    .map_err(|err| format!("Unable to create module {}: {}", file_name, err))?,
             );
             // eprintln!("{:#?}", rule);
             let mut s = Vec::new();
             rule.generate_fn(&parser, &mut s)?;
             write!(out, "{}", str::from_utf8(&s).unwrap())?;
 
-            writeln!(parser_out, "pub mod {};", name)?;
-            writeln!(
-                parser_out,
-                "pub use self::{name}::{{{type_name}, {name}}};",
-                name = name,
-                type_name = type_name
-            )?;
+            writeln!(parser_out, "pub mod {};", file_name)?;
+            // writeln!(
+            //     parser_out,
+            //     "pub use self::{file_name}::{{{type_name}, {name}}};",
+            //     file_name = file_name,
+            //     name = name,
+            //     type_name = type_name
+            // )?;
         }
         /*
                 writeln!(

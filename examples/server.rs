@@ -6,17 +6,19 @@ use combine::parser::Parser;
 use combine::EasyParser;
 use futures::{SinkExt, StreamExt};
 use kafka_protocol::api_key::ApiKey;
-use kafka_protocol::parser::request_header;
-use kafka_protocol::parser::response_header;
+use kafka_protocol::parser::request_header::request_header;
+use kafka_protocol::parser::response_header::response_header;
 use kafka_protocol::{Encode, Record, RecordBatch};
 use tokio::net::tcp::ReadHalf;
 use tokio::net::{TcpListener, TcpStream};
 use tokio_util::codec::{BytesCodec, FramedRead, FramedWrite, LengthDelimitedCodec};
 
+const LOCAL_ADDR: &'static str = "10.181.152.13";
+
 #[tokio::main]
 async fn main() {
     serve(
-        "10.181.160.207:9092".parse().unwrap(),
+        "0.0.0.0:9092".parse().unwrap(),
         "10.100.49.2:9092".parse().unwrap(),
     )
     .await
@@ -161,21 +163,24 @@ pub async fn serve(serve_addr: SocketAddr, proxy_addr: SocketAddr) -> std::io::R
 fn api_versions_request(api_version: i16, rest: &[u8]) {
     match api_version {
         0 => {
-            let (api_versions, _rest) = kafka_protocol::parser::api_versions_v0_request()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::api_versions_request_v0::api_versions_request()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_request");
             println!("<in>API_VERSIONS request body: {:?}", api_versions);
         }
         1 => {
-            let (api_versions, _rest) = kafka_protocol::parser::api_versions_v1_request()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::api_versions_request_v1::api_versions_request()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_request");
             println!("<in>API_VERSIONS request body: {:?}", api_versions);
         }
         2 => {
-            let (api_versions, _rest) = kafka_protocol::parser::api_versions_v2_request()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::api_versions_request_v2::api_versions_request()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_request");
             println!("<in>API_VERSIONS request body: {:?}", api_versions);
         }
         3 => {
@@ -190,21 +195,24 @@ fn api_versions_request(api_version: i16, rest: &[u8]) {
 fn api_versions_response(api_version: i16, rest: &[u8]) {
     match api_version {
         0 => {
-            let (api_versions, _rest) = kafka_protocol::parser::api_versions_v0_response()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_response");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::api_versions_response_v0::api_versions_response()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_response");
             println!("<out>API_VERSIONS header response:: {:?}", api_versions);
         }
         1 => {
-            let (api_versions, _rest) = kafka_protocol::parser::api_versions_v1_response()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_response");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::api_versions_response_v1::api_versions_response()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_response");
             println!("<out>API_VERSIONS header response:: {:?}", api_versions);
         }
         2 => {
-            let (api_versions, _rest) = kafka_protocol::parser::api_versions_v2_response()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_response");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::api_versions_response_v2::api_versions_response()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_response");
             println!("<out>API_VERSIONS header response:: {:?}", api_versions);
         }
         3 => {
@@ -222,57 +230,66 @@ fn api_versions_response(api_version: i16, rest: &[u8]) {
 fn metadata_request(api_version: i16, rest: &[u8]) {
     match api_version {
         0 => {
-            let (api_versions, _rest) = kafka_protocol::parser::metadata_v0_request()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::metadata_request_v0::metadata_request()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_request");
             println!("<in>METADATA request body: {:?}", api_versions);
         }
         1 => {
-            let (api_versions, _rest) = kafka_protocol::parser::metadata_v1_request()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::metadata_request_v1::metadata_request()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_request");
             println!("<in>METADATA request body: {:?}", api_versions);
         }
         2 => {
-            let (api_versions, _rest) = kafka_protocol::parser::metadata_v2_request()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::metadata_request_v2::metadata_request()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_request");
             println!("<in>METADATA request body: {:?}", api_versions);
         }
         3 => {
-            let (api_versions, _rest) = kafka_protocol::parser::metadata_v3_request()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::metadata_request_v3::metadata_request()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_request");
             println!("<in>METADATA request body: {:?}", api_versions);
         }
         4 => {
-            let (api_versions, _rest) = kafka_protocol::parser::metadata_v4_request()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::metadata_request_v4::metadata_request()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_request");
             println!("<in>METADATA request body: {:?}", api_versions);
         }
         5 => {
-            let (api_versions, _rest) = kafka_protocol::parser::metadata_v5_request()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::metadata_request_v5::metadata_request()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_request");
             println!("<in>METADATA request body: {:?}", api_versions);
         }
         6 => {
-            let (api_versions, _rest) = kafka_protocol::parser::metadata_v6_request()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::metadata_request_v6::metadata_request()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_request");
             println!("<in>METADATA request body: {:?}", api_versions);
         }
         7 => {
-            let (api_versions, _rest) = kafka_protocol::parser::metadata_v7_request()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::metadata_request_v7::metadata_request()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_request");
             println!("<in>METADATA request body: {:?}", api_versions);
         }
         8 => {
-            let (api_versions, _rest) = kafka_protocol::parser::metadata_v8_request()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::metadata_request_v8::metadata_request()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_request");
             println!("<in>METADATA request body: {:?}", api_versions);
         }
         _ => {
@@ -284,16 +301,17 @@ fn metadata_request(api_version: i16, rest: &[u8]) {
 fn metadata_response(api_version: i16, rest: &[u8]) -> Vec<u8> {
     match api_version {
         0 => {
-            let (mut api_versions, _rest) = kafka_protocol::parser::metadata_v0_response()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_response");
+            let (mut api_versions, _rest) =
+                kafka_protocol::parser::metadata_response_v0::metadata_response()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_response");
             println!("<out>METADATA response:: {:?}", api_versions);
             api_versions.brokers.clear();
             api_versions
                 .brokers
-                .push(kafka_protocol::parser::metadata_v0_response::Brokers {
+                .push(kafka_protocol::parser::metadata_response_v0::Brokers {
                     node_id: 1i32,
-                    host: "10.181.160.207",
+                    host: LOCAL_ADDR,
                     port: 9092i32,
                 });
             println!("<out>METADATA response replace:: {:?}", api_versions);
@@ -303,17 +321,18 @@ fn metadata_response(api_version: i16, rest: &[u8]) -> Vec<u8> {
             encode_bytes
         }
         1 => {
-            let (mut api_versions, _rest) = kafka_protocol::parser::metadata_v1_response()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_response");
+            let (mut api_versions, _rest) =
+                kafka_protocol::parser::metadata_response_v1::metadata_response()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_response");
             println!("<out>METADATA response:: {:?}", api_versions);
 
             api_versions.brokers.clear();
             api_versions
                 .brokers
-                .push(kafka_protocol::parser::metadata_v1_response::Brokers {
+                .push(kafka_protocol::parser::metadata_response_v1::Brokers {
                     node_id: 1i32,
-                    host: "10.181.160.207",
+                    host: LOCAL_ADDR,
                     port: 9092i32,
                     rack: None,
                 });
@@ -324,17 +343,18 @@ fn metadata_response(api_version: i16, rest: &[u8]) -> Vec<u8> {
             encode_bytes
         }
         2 => {
-            let (mut api_versions, _rest) = kafka_protocol::parser::metadata_v2_response()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_response");
+            let (mut api_versions, _rest) =
+                kafka_protocol::parser::metadata_response_v2::metadata_response()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_response");
             println!("<out>METADATA response:: {:?}", api_versions);
 
             api_versions.brokers.clear();
             api_versions
                 .brokers
-                .push(kafka_protocol::parser::metadata_v2_response::Brokers {
+                .push(kafka_protocol::parser::metadata_response_v2::Brokers {
                     node_id: 1i32,
-                    host: "10.181.160.207",
+                    host: LOCAL_ADDR,
                     port: 9092i32,
                     rack: None,
                 });
@@ -345,17 +365,18 @@ fn metadata_response(api_version: i16, rest: &[u8]) -> Vec<u8> {
             encode_bytes
         }
         3 => {
-            let (mut api_versions, _rest) = kafka_protocol::parser::metadata_v3_response()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_response");
+            let (mut api_versions, _rest) =
+                kafka_protocol::parser::metadata_response_v3::metadata_response()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_response");
             println!("<out>METADATA response:: {:?}", api_versions);
 
             api_versions.brokers.clear();
             api_versions
                 .brokers
-                .push(kafka_protocol::parser::metadata_v3_response::Brokers {
+                .push(kafka_protocol::parser::metadata_response_v3::Brokers {
                     node_id: 1i32,
-                    host: "10.181.160.207",
+                    host: LOCAL_ADDR,
                     port: 9092i32,
                     rack: None,
                 });
@@ -366,17 +387,18 @@ fn metadata_response(api_version: i16, rest: &[u8]) -> Vec<u8> {
             encode_bytes
         }
         4 => {
-            let (mut api_versions, _rest) = kafka_protocol::parser::metadata_v4_response()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_response");
+            let (mut api_versions, _rest) =
+                kafka_protocol::parser::metadata_response_v4::metadata_response()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_response");
             println!("<out>METADATA response:: {:?}", api_versions);
 
             api_versions.brokers.clear();
             api_versions
                 .brokers
-                .push(kafka_protocol::parser::metadata_v4_response::Brokers {
+                .push(kafka_protocol::parser::metadata_response_v4::Brokers {
                     node_id: 1i32,
-                    host: "10.181.160.207",
+                    host: LOCAL_ADDR,
                     port: 9092i32,
                     rack: None,
                 });
@@ -387,17 +409,18 @@ fn metadata_response(api_version: i16, rest: &[u8]) -> Vec<u8> {
             encode_bytes
         }
         5 => {
-            let (mut api_versions, _rest) = kafka_protocol::parser::metadata_v5_response()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_response");
+            let (mut api_versions, _rest) =
+                kafka_protocol::parser::metadata_response_v5::metadata_response()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_response");
             println!("<out>METADATA response:: {:?}", api_versions);
 
             api_versions.brokers.clear();
             api_versions
                 .brokers
-                .push(kafka_protocol::parser::metadata_v5_response::Brokers {
+                .push(kafka_protocol::parser::metadata_response_v5::Brokers {
                     node_id: 1i32,
-                    host: "10.181.160.207",
+                    host: LOCAL_ADDR,
                     port: 9092i32,
                     rack: None,
                 });
@@ -408,17 +431,18 @@ fn metadata_response(api_version: i16, rest: &[u8]) -> Vec<u8> {
             encode_bytes
         }
         6 => {
-            let (mut api_versions, _rest) = kafka_protocol::parser::metadata_v6_response()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_response");
+            let (mut api_versions, _rest) =
+                kafka_protocol::parser::metadata_response_v6::metadata_response()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_response");
             println!("<out>METADATA response:: {:?}", api_versions);
 
             api_versions.brokers.clear();
             api_versions
                 .brokers
-                .push(kafka_protocol::parser::metadata_v6_response::Brokers {
+                .push(kafka_protocol::parser::metadata_response_v6::Brokers {
                     node_id: 1i32,
-                    host: "10.181.160.207",
+                    host: LOCAL_ADDR,
                     port: 9092i32,
                     rack: None,
                 });
@@ -429,17 +453,18 @@ fn metadata_response(api_version: i16, rest: &[u8]) -> Vec<u8> {
             encode_bytes
         }
         7 => {
-            let (mut api_versions, _rest) = kafka_protocol::parser::metadata_v7_response()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_response");
+            let (mut api_versions, _rest) =
+                kafka_protocol::parser::metadata_response_v7::metadata_response()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_response");
             println!("<out>METADATA response:: {:?}", api_versions);
 
             api_versions.brokers.clear();
             api_versions
                 .brokers
-                .push(kafka_protocol::parser::metadata_v7_response::Brokers {
+                .push(kafka_protocol::parser::metadata_response_v7::Brokers {
                     node_id: 1i32,
-                    host: "10.181.160.207",
+                    host: LOCAL_ADDR,
                     port: 9092i32,
                     rack: None,
                 });
@@ -450,17 +475,18 @@ fn metadata_response(api_version: i16, rest: &[u8]) -> Vec<u8> {
             encode_bytes
         }
         8 => {
-            let (mut api_versions, _rest) = kafka_protocol::parser::metadata_v8_response()
-                .easy_parse(rest)
-                .expect("Invalid api_versions_response");
+            let (mut api_versions, _rest) =
+                kafka_protocol::parser::metadata_response_v8::metadata_response()
+                    .easy_parse(rest)
+                    .expect("Invalid api_versions_response");
             println!("<out>METADATA response:: {:?}", api_versions);
 
             api_versions.brokers.clear();
             api_versions
                 .brokers
-                .push(kafka_protocol::parser::metadata_v8_response::Brokers {
+                .push(kafka_protocol::parser::metadata_response_v8::Brokers {
                     node_id: 1i32,
-                    host: "10.181.160.207",
+                    host: LOCAL_ADDR,
                     port: 9092i32,
                     rack: None,
                 });
@@ -480,75 +506,83 @@ fn metadata_response(api_version: i16, rest: &[u8]) -> Vec<u8> {
 fn produce_request(api_version: i16, rest: &[u8]) {
     match api_version {
         0 => {
-            let (api_versions, _rest) = kafka_protocol::parser::produce_v0_request::<
-                Option<RecordBatch<Vec<Record<'_>>>>,
-                _,
-            >()
-            .easy_parse(rest)
-            .expect("Invalid produce_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::produce_request_v0::produce_request::<
+                    Option<RecordBatch<Vec<Record<'_>>>>,
+                    _,
+                >()
+                .easy_parse(rest)
+                .expect("Invalid produce_request");
             println!("<in>Produce request body: {:?}", api_versions);
         }
         1 => {
-            let (api_versions, _rest) = kafka_protocol::parser::produce_v1_request::<
-                Option<RecordBatch<Vec<Record<'_>>>>,
-                _,
-            >()
-            .easy_parse(rest)
-            .expect("Invalid produce_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::produce_request_v1::produce_request::<
+                    Option<RecordBatch<Vec<Record<'_>>>>,
+                    _,
+                >()
+                .easy_parse(rest)
+                .expect("Invalid produce_request");
             println!("<in>Produce request body: {:?}", api_versions);
         }
         2 => {
-            let (api_versions, _rest) = kafka_protocol::parser::produce_v2_request::<
-                Option<RecordBatch<Vec<Record<'_>>>>,
-                _,
-            >()
-            .easy_parse(rest)
-            .expect("Invalid produce_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::produce_request_v2::produce_request::<
+                    Option<RecordBatch<Vec<Record<'_>>>>,
+                    _,
+                >()
+                .easy_parse(rest)
+                .expect("Invalid produce_request");
             println!("<in>Produce request body: {:?}", api_versions);
         }
         3 => {
-            let (api_versions, _rest) = kafka_protocol::parser::produce_v3_request::<
-                Option<RecordBatch<Vec<Record<'_>>>>,
-                _,
-            >()
-            .easy_parse(rest)
-            .expect("Invalid produce_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::produce_request_v3::produce_request::<
+                    Option<RecordBatch<Vec<Record<'_>>>>,
+                    _,
+                >()
+                .easy_parse(rest)
+                .expect("Invalid produce_request");
             println!("<in>Produce request body: {:?}", api_versions);
         }
         4 => {
-            let (api_versions, _rest) = kafka_protocol::parser::produce_v4_request::<
-                Option<RecordBatch<Vec<Record<'_>>>>,
-                _,
-            >()
-            .easy_parse(rest)
-            .expect("Invalid produce_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::produce_request_v4::produce_request::<
+                    Option<RecordBatch<Vec<Record<'_>>>>,
+                    _,
+                >()
+                .easy_parse(rest)
+                .expect("Invalid produce_request");
             println!("<in>Produce request body: {:?}", api_versions);
         }
         5 => {
-            let (api_versions, _rest) = kafka_protocol::parser::produce_v5_request::<
-                Option<RecordBatch<Vec<Record<'_>>>>,
-                _,
-            >()
-            .easy_parse(rest)
-            .expect("Invalid produce_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::produce_request_v5::produce_request::<
+                    Option<RecordBatch<Vec<Record<'_>>>>,
+                    _,
+                >()
+                .easy_parse(rest)
+                .expect("Invalid produce_request");
             println!("<in>Produce request body: {:?}", api_versions);
         }
         6 => {
-            let (api_versions, _rest) = kafka_protocol::parser::produce_v6_request::<
-                Option<RecordBatch<Vec<Record<'_>>>>,
-                _,
-            >()
-            .easy_parse(rest)
-            .expect("Invalid produce_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::produce_request_v6::produce_request::<
+                    Option<RecordBatch<Vec<Record<'_>>>>,
+                    _,
+                >()
+                .easy_parse(rest)
+                .expect("Invalid produce_request");
             println!("<in>Produce request body: {:?}", api_versions);
         }
         7 => {
-            let (api_versions, _rest) = kafka_protocol::parser::produce_v7_request::<
-                Option<RecordBatch<Vec<Record<'_>>>>,
-                _,
-            >()
-            .easy_parse(rest)
-            .expect("Invalid produce_request");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::produce_request_v7::produce_request::<
+                    Option<RecordBatch<Vec<Record<'_>>>>,
+                    _,
+                >()
+                .easy_parse(rest)
+                .expect("Invalid produce_request");
             println!("<in>Produce request body: {:?}", api_versions);
         }
         _ => {
@@ -560,51 +594,59 @@ fn produce_request(api_version: i16, rest: &[u8]) {
 fn produce_response(api_version: i16, rest: &[u8]) {
     match api_version {
         0 => {
-            let (api_versions, _rest) = kafka_protocol::parser::produce_v0_response()
-                .easy_parse(rest)
-                .expect("Invalid produce_response");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::produce_response_v0::produce_response()
+                    .easy_parse(rest)
+                    .expect("Invalid produce_response");
             println!("<out>Produce header response:: {:?}", api_versions);
         }
         1 => {
-            let (api_versions, _rest) = kafka_protocol::parser::produce_v1_response()
-                .easy_parse(rest)
-                .expect("Invalid produce_response");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::produce_response_v1::produce_response()
+                    .easy_parse(rest)
+                    .expect("Invalid produce_response");
             println!("<out>Produce header response:: {:?}", api_versions);
         }
         2 => {
-            let (api_versions, _rest) = kafka_protocol::parser::produce_v2_response()
-                .easy_parse(rest)
-                .expect("Invalid produce_response");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::produce_response_v2::produce_response()
+                    .easy_parse(rest)
+                    .expect("Invalid produce_response");
             println!("<out>Produce header response:: {:?}", api_versions);
         }
         3 => {
-            let (api_versions, _rest) = kafka_protocol::parser::produce_v3_response()
-                .easy_parse(rest)
-                .expect("Invalid produce_response");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::produce_response_v3::produce_response()
+                    .easy_parse(rest)
+                    .expect("Invalid produce_response");
             println!("<out>Produce header response:: {:?}", api_versions);
         }
         4 => {
-            let (api_versions, _rest) = kafka_protocol::parser::produce_v4_response()
-                .easy_parse(rest)
-                .expect("Invalid produce_response");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::produce_response_v4::produce_response()
+                    .easy_parse(rest)
+                    .expect("Invalid produce_response");
             println!("<out>Produce header response:: {:?}", api_versions);
         }
         5 => {
-            let (api_versions, _rest) = kafka_protocol::parser::produce_v5_response()
-                .easy_parse(rest)
-                .expect("Invalid produce_response");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::produce_response_v5::produce_response()
+                    .easy_parse(rest)
+                    .expect("Invalid produce_response");
             println!("<out>Produce header response:: {:?}", api_versions);
         }
         6 => {
-            let (api_versions, _rest) = kafka_protocol::parser::produce_v6_response()
-                .easy_parse(rest)
-                .expect("Invalid produce_response");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::produce_response_v6::produce_response()
+                    .easy_parse(rest)
+                    .expect("Invalid produce_response");
             println!("<out>Produce header response:: {:?}", api_versions);
         }
         7 => {
-            let (api_versions, _rest) = kafka_protocol::parser::produce_v7_response()
-                .easy_parse(rest)
-                .expect("Invalid produce_response");
+            let (api_versions, _rest) =
+                kafka_protocol::parser::produce_response_v7::produce_response()
+                    .easy_parse(rest)
+                    .expect("Invalid produce_response");
             println!("<out>Produce header response:: {:?}", api_versions);
         }
         _ => {

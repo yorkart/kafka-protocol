@@ -5,7 +5,7 @@ use std::time::Duration;
 
 #[tokio::main]
 async fn main() {
-    produce("10.181.160.207:9092", "proxy_test").await;
+    produce("10.181.152.13:9092", "proxy_test").await;
     // produce("10.100.49.2:9092", "proxy_test").await;
 }
 

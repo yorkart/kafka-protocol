@@ -435,8 +435,8 @@ pub struct Record<'i> {
     headers: Vec<RecordHeader<'i>>,
 }
 
-impl<'i> From<crate::parser::Record<'i>> for Record<'i> {
-    fn from(record: crate::parser::Record<'i>) -> Self {
+impl<'i> From<crate::parser::record::Record<'i>> for Record<'i> {
+    fn from(record: crate::parser::record::Record<'i>) -> Self {
         let crate::parser::record::Record {
             length: _,
             attributes,
@@ -494,12 +494,12 @@ impl<'i> RecordBatch<RawRecords<'i>> {
 impl<R> RecordBatch<R> {
     fn verify<I>(
         range: &[u8],
-        record_set: crate::parser::RecordSet<R>,
+        record_set: crate::parser::record_set::RecordSet<R>,
     ) -> Result<Self, StreamErrorFor<I>>
     where
         I: RangeStream,
     {
-        let crate::parser::RecordSet {
+        let crate::parser::record_set::RecordSet {
             base_offset,
             batch_length,
             partition_leader_epoch,
@@ -566,7 +566,8 @@ where
                     log::trace!("Control batch");
                 }
 
-                let (value, _rest) = crate::parser::record_set().parse(I::from(bytes))?;
+                let (value, _rest) =
+                    crate::parser::record_set::record_set().parse(I::from(bytes))?;
                 // debug_assert!(rest.is_empty(), "{:#?} {:?}", value, rest);
                 log::trace!("Parsed record_set: {:#?}", value);
 
@@ -591,9 +592,12 @@ where
             let count = usize::try_from(batch.records.count).map_err(|err| {
                 I::Error::from_error(input.position(), StreamErrorFor::<I>::other(err))
             })?;
-            let (value, _rest) =
-                combine::parser::repeat::count_min_max(count, count, crate::parser::record())
-                    .parse(input)?;
+            let (value, _rest) = combine::parser::repeat::count_min_max(
+                count,
+                count,
+                crate::parser::record::record(),
+            )
+            .parse(input)?;
             // debug_assert!(rest.is_empty(), "{:#?} {:?}", value, rest);
             log::trace!("Parsed record_set: {:#?}", value);
 
