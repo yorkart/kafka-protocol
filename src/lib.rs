@@ -14,20 +14,19 @@ use {
     },
     integer_encoding::VarInt,
     itertools::Itertools,
-    tokio::io::{AsyncRead, AsyncWrite},
 };
 
-use {api_key::ApiKey, client::Client, error::ErrorCode};
+use {api_key::ApiKey, error::ErrorCode};
 
 #[macro_use]
 extern crate quick_error;
 
 pub mod api_key;
-pub mod client;
-pub mod consumer;
+// pub mod client;
+// pub mod consumer;
 pub mod error;
 pub mod parser;
-pub mod producer;
+// pub mod producer;
 
 pub type Result<T, E = Error> = std::result::Result<T, E>;
 
@@ -94,7 +93,7 @@ where
 {
     combine::parser::function::parser(move |input: &mut I| {
         let range = input.range();
-        let (value, out) = i32::decode_var(range);
+        let (value, out) = i32::decode_var(range).unwrap();
         combine::stream::uncons_range(input, out).into_result()?;
         Ok((value, combine::error::Commit::Commit(())))
     })
@@ -888,15 +887,5 @@ pub enum Compression {
 impl Default for Compression {
     fn default() -> Self {
         Compression::None
-    }
-}
-
-impl ErrorCode {
-    pub(crate) fn into_result(self) -> Result<()> {
-        if self == ErrorCode::None {
-            Ok(())
-        } else {
-            Err(Error::from(self))
-        }
     }
 }

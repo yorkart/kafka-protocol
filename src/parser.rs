@@ -3,10 +3,38 @@ pub mod request_header;
 pub use self::request_header::{request_header, RequestHeader};
 pub mod response_header;
 pub use self::response_header::{response_header, ResponseHeader};
-pub mod produce_request;
-pub use self::produce_request::{produce_request, ProduceRequest};
-pub mod produce_response;
-pub use self::produce_response::{produce_response, ProduceResponse};
+pub mod produce_v0_request;
+pub use self::produce_v0_request::{produce_v0_request, ProduceV0Request};
+pub mod produce_v1_request;
+pub use self::produce_v1_request::{produce_v1_request, ProduceV1Request};
+pub mod produce_v2_request;
+pub use self::produce_v2_request::{produce_v2_request, ProduceV2Request};
+pub mod produce_v3_request;
+pub use self::produce_v3_request::{produce_v3_request, ProduceV3Request};
+pub mod produce_v4_request;
+pub use self::produce_v4_request::{produce_v4_request, ProduceV4Request};
+pub mod produce_v5_request;
+pub use self::produce_v5_request::{produce_v5_request, ProduceV5Request};
+pub mod produce_v6_request;
+pub use self::produce_v6_request::{produce_v6_request, ProduceV6Request};
+pub mod produce_v7_request;
+pub use self::produce_v7_request::{produce_v7_request, ProduceV7Request};
+pub mod produce_v0_response;
+pub use self::produce_v0_response::{produce_v0_response, ProduceV0Response};
+pub mod produce_v1_response;
+pub use self::produce_v1_response::{produce_v1_response, ProduceV1Response};
+pub mod produce_v2_response;
+pub use self::produce_v2_response::{produce_v2_response, ProduceV2Response};
+pub mod produce_v3_response;
+pub use self::produce_v3_response::{produce_v3_response, ProduceV3Response};
+pub mod produce_v4_response;
+pub use self::produce_v4_response::{produce_v4_response, ProduceV4Response};
+pub mod produce_v5_response;
+pub use self::produce_v5_response::{produce_v5_response, ProduceV5Response};
+pub mod produce_v6_response;
+pub use self::produce_v6_response::{produce_v6_response, ProduceV6Response};
+pub mod produce_v7_response;
+pub use self::produce_v7_response::{produce_v7_response, ProduceV7Response};
 pub mod fetch_request;
 pub use self::fetch_request::{fetch_request, FetchRequest};
 pub mod fetch_response;
@@ -15,10 +43,42 @@ pub mod list_offsets_request;
 pub use self::list_offsets_request::{list_offsets_request, ListOffsetsRequest};
 pub mod list_offsets_response;
 pub use self::list_offsets_response::{list_offsets_response, ListOffsetsResponse};
-pub mod metadata_request;
-pub use self::metadata_request::{metadata_request, MetadataRequest};
-pub mod metadata_response;
-pub use self::metadata_response::{metadata_response, MetadataResponse};
+pub mod metadata_v0_request;
+pub use self::metadata_v0_request::{metadata_v0_request, MetadataV0Request};
+pub mod metadata_v1_request;
+pub use self::metadata_v1_request::{metadata_v1_request, MetadataV1Request};
+pub mod metadata_v2_request;
+pub use self::metadata_v2_request::{metadata_v2_request, MetadataV2Request};
+pub mod metadata_v3_request;
+pub use self::metadata_v3_request::{metadata_v3_request, MetadataV3Request};
+pub mod metadata_v4_request;
+pub use self::metadata_v4_request::{metadata_v4_request, MetadataV4Request};
+pub mod metadata_v5_request;
+pub use self::metadata_v5_request::{metadata_v5_request, MetadataV5Request};
+pub mod metadata_v6_request;
+pub use self::metadata_v6_request::{metadata_v6_request, MetadataV6Request};
+pub mod metadata_v7_request;
+pub use self::metadata_v7_request::{metadata_v7_request, MetadataV7Request};
+pub mod metadata_v8_request;
+pub use self::metadata_v8_request::{metadata_v8_request, MetadataV8Request};
+pub mod metadata_v0_response;
+pub use self::metadata_v0_response::{metadata_v0_response, MetadataV0Response};
+pub mod metadata_v1_response;
+pub use self::metadata_v1_response::{metadata_v1_response, MetadataV1Response};
+pub mod metadata_v2_response;
+pub use self::metadata_v2_response::{metadata_v2_response, MetadataV2Response};
+pub mod metadata_v3_response;
+pub use self::metadata_v3_response::{metadata_v3_response, MetadataV3Response};
+pub mod metadata_v4_response;
+pub use self::metadata_v4_response::{metadata_v4_response, MetadataV4Response};
+pub mod metadata_v5_response;
+pub use self::metadata_v5_response::{metadata_v5_response, MetadataV5Response};
+pub mod metadata_v6_response;
+pub use self::metadata_v6_response::{metadata_v6_response, MetadataV6Response};
+pub mod metadata_v7_response;
+pub use self::metadata_v7_response::{metadata_v7_response, MetadataV7Response};
+pub mod metadata_v8_response;
+pub use self::metadata_v8_response::{metadata_v8_response, MetadataV8Response};
 pub mod leader_and_isr_request;
 pub use self::leader_and_isr_request::{leader_and_isr_request, LeaderAndIsrRequest};
 pub mod leader_and_isr_response;
@@ -79,10 +139,18 @@ pub mod sasl_handshake_request;
 pub use self::sasl_handshake_request::{sasl_handshake_request, SaslHandshakeRequest};
 pub mod sasl_handshake_response;
 pub use self::sasl_handshake_response::{sasl_handshake_response, SaslHandshakeResponse};
-pub mod api_versions_request;
-pub use self::api_versions_request::{api_versions_request, ApiVersionsRequest};
-pub mod api_versions_response;
-pub use self::api_versions_response::{api_versions_response, ApiVersionsResponse};
+pub mod api_versions_v0_request;
+pub use self::api_versions_v0_request::{api_versions_v0_request, ApiVersionsV0Request};
+pub mod api_versions_v1_request;
+pub use self::api_versions_v1_request::{api_versions_v1_request, ApiVersionsV1Request};
+pub mod api_versions_v2_request;
+pub use self::api_versions_v2_request::{api_versions_v2_request, ApiVersionsV2Request};
+pub mod api_versions_v0_response;
+pub use self::api_versions_v0_response::{api_versions_v0_response, ApiVersionsV0Response};
+pub mod api_versions_v1_response;
+pub use self::api_versions_v1_response::{api_versions_v1_response, ApiVersionsV1Response};
+pub mod api_versions_v2_response;
+pub use self::api_versions_v2_response::{api_versions_v2_response, ApiVersionsV2Response};
 pub mod create_topics_request;
 pub use self::create_topics_request::{create_topics_request, CreateTopicsRequest};
 pub mod create_topics_response;
@@ -231,552 +299,3 @@ pub mod protocol_metadata;
 pub use self::protocol_metadata::{protocol_metadata, ProtocolMetadata};
 pub mod member_assignment;
 pub use self::member_assignment::{member_assignment, MemberAssignment};
-impl<I> Client<I>
-where
-    I: AsyncRead + AsyncWrite + std::marker::Unpin,
-{
-    pub async fn add_offsets_to_txn<'i>(
-        &'i mut self,
-        request: AddOffsetsToTxnRequest<'_>,
-    ) -> Result<AddOffsetsToTxnResponse> where {
-        self.call(
-            request,
-            ApiKey::ADD_OFFSETS_TO_TXN,
-            add_offsets_to_txn_request::VERSION,
-            add_offsets_to_txn_response(),
-        )
-        .await
-    }
-    pub async fn add_partitions_to_txn<'i>(
-        &'i mut self,
-        request: AddPartitionsToTxnRequest<'_>,
-    ) -> Result<AddPartitionsToTxnResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::ADD_PARTITIONS_TO_TXN,
-            add_partitions_to_txn_request::VERSION,
-            add_partitions_to_txn_response(),
-        )
-        .await
-    }
-    pub async fn alter_configs<'i>(
-        &'i mut self,
-        request: AlterConfigsRequest<'_>,
-    ) -> Result<AlterConfigsResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::ALTER_CONFIGS,
-            alter_configs_request::VERSION,
-            alter_configs_response(),
-        )
-        .await
-    }
-    pub async fn alter_replica_log_dirs<'i>(
-        &'i mut self,
-        request: AlterReplicaLogDirsRequest<'_>,
-    ) -> Result<AlterReplicaLogDirsResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::ALTER_REPLICA_LOG_DIRS,
-            alter_replica_log_dirs_request::VERSION,
-            alter_replica_log_dirs_response(),
-        )
-        .await
-    }
-    pub async fn api_versions<'i>(
-        &'i mut self,
-        request: ApiVersionsRequest,
-    ) -> Result<ApiVersionsResponse> where {
-        self.call(
-            request,
-            ApiKey::API_VERSIONS,
-            api_versions_request::VERSION,
-            api_versions_response(),
-        )
-        .await
-    }
-    pub async fn controlled_shutdown<'i>(
-        &'i mut self,
-        request: ControlledShutdownRequest,
-    ) -> Result<ControlledShutdownResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::CONTROLLED_SHUTDOWN,
-            controlled_shutdown_request::VERSION,
-            controlled_shutdown_response(),
-        )
-        .await
-    }
-    pub async fn create_acls<'i>(
-        &'i mut self,
-        request: CreateAclsRequest<'_>,
-    ) -> Result<CreateAclsResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::CREATE_ACLS,
-            create_acls_request::VERSION,
-            create_acls_response(),
-        )
-        .await
-    }
-    pub async fn create_delegation_token<'i>(
-        &'i mut self,
-        request: CreateDelegationTokenRequest<'_>,
-    ) -> Result<CreateDelegationTokenResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::CREATE_DELEGATION_TOKEN,
-            create_delegation_token_request::VERSION,
-            create_delegation_token_response(),
-        )
-        .await
-    }
-    pub async fn create_partitions<'i>(
-        &'i mut self,
-        request: CreatePartitionsRequest<'_>,
-    ) -> Result<CreatePartitionsResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::CREATE_PARTITIONS,
-            create_partitions_request::VERSION,
-            create_partitions_response(),
-        )
-        .await
-    }
-    pub async fn create_topics<'i>(
-        &'i mut self,
-        request: CreateTopicsRequest<'_>,
-    ) -> Result<CreateTopicsResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::CREATE_TOPICS,
-            create_topics_request::VERSION,
-            create_topics_response(),
-        )
-        .await
-    }
-    pub async fn delete_acls<'i>(
-        &'i mut self,
-        request: DeleteAclsRequest<'_>,
-    ) -> Result<DeleteAclsResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::DELETE_ACLS,
-            delete_acls_request::VERSION,
-            delete_acls_response(),
-        )
-        .await
-    }
-    pub async fn delete_groups<'i>(
-        &'i mut self,
-        request: DeleteGroupsRequest<'_>,
-    ) -> Result<DeleteGroupsResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::DELETE_GROUPS,
-            delete_groups_request::VERSION,
-            delete_groups_response(),
-        )
-        .await
-    }
-    pub async fn delete_records<'i>(
-        &'i mut self,
-        request: DeleteRecordsRequest<'_>,
-    ) -> Result<DeleteRecordsResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::DELETE_RECORDS,
-            delete_records_request::VERSION,
-            delete_records_response(),
-        )
-        .await
-    }
-    pub async fn delete_topics<'i>(
-        &'i mut self,
-        request: DeleteTopicsRequest<'_>,
-    ) -> Result<DeleteTopicsResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::DELETE_TOPICS,
-            delete_topics_request::VERSION,
-            delete_topics_response(),
-        )
-        .await
-    }
-    pub async fn describe_acls<'i>(
-        &'i mut self,
-        request: DescribeAclsRequest<'_>,
-    ) -> Result<DescribeAclsResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::DESCRIBE_ACLS,
-            describe_acls_request::VERSION,
-            describe_acls_response(),
-        )
-        .await
-    }
-    pub async fn describe_configs<'i>(
-        &'i mut self,
-        request: DescribeConfigsRequest<'_>,
-    ) -> Result<DescribeConfigsResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::DESCRIBE_CONFIGS,
-            describe_configs_request::VERSION,
-            describe_configs_response(),
-        )
-        .await
-    }
-    pub async fn describe_delegation_token<'i>(
-        &'i mut self,
-        request: DescribeDelegationTokenRequest<'_>,
-    ) -> Result<DescribeDelegationTokenResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::DESCRIBE_DELEGATION_TOKEN,
-            describe_delegation_token_request::VERSION,
-            describe_delegation_token_response(),
-        )
-        .await
-    }
-    pub async fn describe_groups<'i>(
-        &'i mut self,
-        request: DescribeGroupsRequest<'_>,
-    ) -> Result<DescribeGroupsResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::DESCRIBE_GROUPS,
-            describe_groups_request::VERSION,
-            describe_groups_response(),
-        )
-        .await
-    }
-    pub async fn describe_log_dirs<'i>(
-        &'i mut self,
-        request: DescribeLogDirsRequest<'_>,
-    ) -> Result<DescribeLogDirsResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::DESCRIBE_LOG_DIRS,
-            describe_log_dirs_request::VERSION,
-            describe_log_dirs_response(),
-        )
-        .await
-    }
-    pub async fn elect_preferred_leaders<'i>(
-        &'i mut self,
-        request: ElectPreferredLeadersRequest<'_>,
-    ) -> Result<ElectPreferredLeadersResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::ELECT_PREFERRED_LEADERS,
-            elect_preferred_leaders_request::VERSION,
-            elect_preferred_leaders_response(),
-        )
-        .await
-    }
-    pub async fn end_txn<'i>(&'i mut self, request: EndTxnRequest<'_>) -> Result<EndTxnResponse> where
-    {
-        self.call(
-            request,
-            ApiKey::END_TXN,
-            end_txn_request::VERSION,
-            end_txn_response(),
-        )
-        .await
-    }
-    pub async fn expire_delegation_token<'i>(
-        &'i mut self,
-        request: ExpireDelegationTokenRequest<'_>,
-    ) -> Result<ExpireDelegationTokenResponse> where {
-        self.call(
-            request,
-            ApiKey::EXPIRE_DELEGATION_TOKEN,
-            expire_delegation_token_request::VERSION,
-            expire_delegation_token_response(),
-        )
-        .await
-    }
-    pub async fn fetch<'i, R>(
-        &'i mut self,
-        request: FetchRequest<'_>,
-    ) -> Result<FetchResponse<'i, R>>
-    where
-        R: RecordBatchParser<combine::stream::easy::Stream<&'i [u8]>> + 'i,
-    {
-        self.call(
-            request,
-            ApiKey::FETCH,
-            fetch_request::VERSION,
-            fetch_response(),
-        )
-        .await
-    }
-    pub async fn find_coordinator<'i>(
-        &'i mut self,
-        request: FindCoordinatorRequest<'_>,
-    ) -> Result<FindCoordinatorResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::FIND_COORDINATOR,
-            find_coordinator_request::VERSION,
-            find_coordinator_response(),
-        )
-        .await
-    }
-    pub async fn heartbeat<'i>(
-        &'i mut self,
-        request: HeartbeatRequest<'_>,
-    ) -> Result<HeartbeatResponse> where {
-        self.call(
-            request,
-            ApiKey::HEARTBEAT,
-            heartbeat_request::VERSION,
-            heartbeat_response(),
-        )
-        .await
-    }
-    pub async fn incremental_alter_configs<'i>(
-        &'i mut self,
-        request: IncrementalAlterConfigsRequest<'_>,
-    ) -> Result<IncrementalAlterConfigsResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::INCREMENTAL_ALTER_CONFIGS,
-            incremental_alter_configs_request::VERSION,
-            incremental_alter_configs_response(),
-        )
-        .await
-    }
-    pub async fn init_producer_id<'i>(
-        &'i mut self,
-        request: InitProducerIdRequest<'_>,
-    ) -> Result<InitProducerIdResponse> where {
-        self.call(
-            request,
-            ApiKey::INIT_PRODUCER_ID,
-            init_producer_id_request::VERSION,
-            init_producer_id_response(),
-        )
-        .await
-    }
-    pub async fn join_group<'i>(
-        &'i mut self,
-        request: JoinGroupRequest<'_>,
-    ) -> Result<JoinGroupResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::JOIN_GROUP,
-            join_group_request::VERSION,
-            join_group_response(),
-        )
-        .await
-    }
-    pub async fn leader_and_isr<'i>(
-        &'i mut self,
-        request: LeaderAndIsrRequest<'_>,
-    ) -> Result<LeaderAndIsrResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::LEADER_AND_ISR,
-            leader_and_isr_request::VERSION,
-            leader_and_isr_response(),
-        )
-        .await
-    }
-    pub async fn leave_group<'i>(
-        &'i mut self,
-        request: LeaveGroupRequest<'_>,
-    ) -> Result<LeaveGroupResponse> where {
-        self.call(
-            request,
-            ApiKey::LEAVE_GROUP,
-            leave_group_request::VERSION,
-            leave_group_response(),
-        )
-        .await
-    }
-    pub async fn list_groups<'i>(
-        &'i mut self,
-        request: ListGroupsRequest,
-    ) -> Result<ListGroupsResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::LIST_GROUPS,
-            list_groups_request::VERSION,
-            list_groups_response(),
-        )
-        .await
-    }
-    pub async fn list_offsets<'i>(
-        &'i mut self,
-        request: ListOffsetsRequest<'_>,
-    ) -> Result<ListOffsetsResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::LIST_OFFSETS,
-            list_offsets_request::VERSION,
-            list_offsets_response(),
-        )
-        .await
-    }
-    pub async fn metadata<'i>(
-        &'i mut self,
-        request: MetadataRequest<'_>,
-    ) -> Result<MetadataResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::METADATA,
-            metadata_request::VERSION,
-            metadata_response(),
-        )
-        .await
-    }
-    pub async fn offset_commit<'i>(
-        &'i mut self,
-        request: OffsetCommitRequest<'_>,
-    ) -> Result<OffsetCommitResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::OFFSET_COMMIT,
-            offset_commit_request::VERSION,
-            offset_commit_response(),
-        )
-        .await
-    }
-    pub async fn offset_fetch<'i>(
-        &'i mut self,
-        request: OffsetFetchRequest<'_>,
-    ) -> Result<OffsetFetchResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::OFFSET_FETCH,
-            offset_fetch_request::VERSION,
-            offset_fetch_response(),
-        )
-        .await
-    }
-    pub async fn offset_for_leader_epoch<'i>(
-        &'i mut self,
-        request: OffsetForLeaderEpochRequest<'_>,
-    ) -> Result<OffsetForLeaderEpochResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::OFFSET_FOR_LEADER_EPOCH,
-            offset_for_leader_epoch_request::VERSION,
-            offset_for_leader_epoch_response(),
-        )
-        .await
-    }
-    pub async fn produce<'i, R>(
-        &'i mut self,
-        request: ProduceRequest<'_, R>,
-    ) -> Result<ProduceResponse<'i>>
-    where
-        R: Encode,
-    {
-        self.call(
-            request,
-            ApiKey::PRODUCE,
-            produce_request::VERSION,
-            produce_response(),
-        )
-        .await
-    }
-    pub async fn renew_delegation_token<'i>(
-        &'i mut self,
-        request: RenewDelegationTokenRequest<'_>,
-    ) -> Result<RenewDelegationTokenResponse> where {
-        self.call(
-            request,
-            ApiKey::RENEW_DELEGATION_TOKEN,
-            renew_delegation_token_request::VERSION,
-            renew_delegation_token_response(),
-        )
-        .await
-    }
-    pub async fn sasl_authenticate<'i>(
-        &'i mut self,
-        request: SaslAuthenticateRequest<'_>,
-    ) -> Result<SaslAuthenticateResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::SASL_AUTHENTICATE,
-            sasl_authenticate_request::VERSION,
-            sasl_authenticate_response(),
-        )
-        .await
-    }
-    pub async fn sasl_handshake<'i>(
-        &'i mut self,
-        request: SaslHandshakeRequest<'_>,
-    ) -> Result<SaslHandshakeResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::SASL_HANDSHAKE,
-            sasl_handshake_request::VERSION,
-            sasl_handshake_response(),
-        )
-        .await
-    }
-    pub async fn stop_replica<'i>(
-        &'i mut self,
-        request: StopReplicaRequest<'_>,
-    ) -> Result<StopReplicaResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::STOP_REPLICA,
-            stop_replica_request::VERSION,
-            stop_replica_response(),
-        )
-        .await
-    }
-    pub async fn sync_group<'i>(
-        &'i mut self,
-        request: SyncGroupRequest<'_>,
-    ) -> Result<SyncGroupResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::SYNC_GROUP,
-            sync_group_request::VERSION,
-            sync_group_response(),
-        )
-        .await
-    }
-    pub async fn txn_offset_commit<'i>(
-        &'i mut self,
-        request: TxnOffsetCommitRequest<'_>,
-    ) -> Result<TxnOffsetCommitResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::TXN_OFFSET_COMMIT,
-            txn_offset_commit_request::VERSION,
-            txn_offset_commit_response(),
-        )
-        .await
-    }
-    pub async fn update_metadata<'i>(
-        &'i mut self,
-        request: UpdateMetadataRequest<'_>,
-    ) -> Result<UpdateMetadataResponse> where {
-        self.call(
-            request,
-            ApiKey::UPDATE_METADATA,
-            update_metadata_request::VERSION,
-            update_metadata_response(),
-        )
-        .await
-    }
-    pub async fn write_txn_markers<'i>(
-        &'i mut self,
-        request: WriteTxnMarkersRequest<'_>,
-    ) -> Result<WriteTxnMarkersResponse<'i>> where {
-        self.call(
-            request,
-            ApiKey::WRITE_TXN_MARKERS,
-            write_txn_markers_request::VERSION,
-            write_txn_markers_response(),
-        )
-        .await
-    }
-}

@@ -1,4 +1,4 @@
-#[cfg(feature = "regenerate")]
+// #[cfg(feature = "regenerate")]
 mod regenerate {
     use std::{
         borrow::Cow,
@@ -959,49 +959,49 @@ mod regenerate {
                 type_name = type_name
             )?;
         }
+        /*
+                writeln!(
+                    parser_out,
+                    "{}",
+                    r#"impl<I> Client<I>
+        where
+            I: AsyncRead + AsyncWrite + std::marker::Unpin,
+        {"#
+                )?;
+                for (call, request, response) in calls
+                    .into_iter()
+                    .filter(|(call, _)| *call != "Response Header" && *call != "Request Header")
+                    .filter_map(|(call, (request, response))| Some((call, request?, response?)))
+                {
+                    let base_type_name = call.replace(" ", "");
+                    let api_key =
+                        inflector::cases::screamingsnakecase::to_screaming_snake_case(&base_type_name);
+                    let name = inflector::cases::snakecase::to_snake_case(&base_type_name);
 
-        writeln!(
-            parser_out,
-            "{}",
-            r#"impl<I> Client<I>
-where
-    I: AsyncRead + AsyncWrite + std::marker::Unpin,
-{"#
-        )?;
-        for (call, request, response) in calls
-            .into_iter()
-            .filter(|(call, _)| *call != "Response Header" && *call != "Request Header")
-            .filter_map(|(call, (request, response))| Some((call, request?, response?)))
-        {
-            let base_type_name = call.replace(" ", "");
-            let api_key =
-                inflector::cases::screamingsnakecase::to_screaming_snake_case(&base_type_name);
-            let name = inflector::cases::snakecase::to_snake_case(&base_type_name);
-
-            writeln!(
-                parser_out,
-                "pub async fn {name}<'i{ty_params}>(&'i mut self, request: {base_type_name}Request{request_lt}) -> Result<{base_type_name}Response{response_lt}> where {where_bounds} {{",
-                name = name,
-                ty_params = request.needed_params()
-                    .iter().chain(response.needed_params().iter())
-                    .filter(|param| param.name != "'i")
-                    .map(|p| format!(", {}", p.name))
-                    .format(""),
-                base_type_name = base_type_name,
-                request_lt = request.lifetime().replace("'i", "'_"),
-                response_lt = response.lifetime(),
-                where_bounds = request.non_lifetime_params().map(|param| {
-                        format!("{}: Encode,", param.name)
-                    })
-                    .chain(
-                        response.non_lifetime_params().map(|param| format!("{}: RecordBatchParser<combine::stream::easy::Stream<&'i [u8]>> + 'i,", param.name))
-                    )
-                    .format(" ")
-            )?;
-            writeln!(parser_out, "    self.call(request, ApiKey::{api_key}, {name}_request::VERSION, {name}_response()).await", name = name, api_key = api_key)?;
-            writeln!(parser_out, "}}")?;
-        }
-        writeln!(parser_out, "}}")?;
+                    writeln!(
+                        parser_out,
+                        "pub async fn {name}<'i{ty_params}>(&'i mut self, request: {base_type_name}Request{request_lt}) -> Result<{base_type_name}Response{response_lt}> where {where_bounds} {{",
+                        name = name,
+                        ty_params = request.needed_params()
+                            .iter().chain(response.needed_params().iter())
+                            .filter(|param| param.name != "'i")
+                            .map(|p| format!(", {}", p.name))
+                            .format(""),
+                        base_type_name = base_type_name,
+                        request_lt = request.lifetime().replace("'i", "'_"),
+                        response_lt = response.lifetime(),
+                        where_bounds = request.non_lifetime_params().map(|param| {
+                                format!("{}: Encode,", param.name)
+                            })
+                            .chain(
+                                response.non_lifetime_params().map(|param| format!("{}: RecordBatchParser<combine::stream::easy::Stream<&'i [u8]>> + 'i,", param.name))
+                            )
+                            .format(" ")
+                    )?;
+                    writeln!(parser_out, "    self.call(request, ApiKey::{api_key}, {name}_request::VERSION, {name}_response()).await", name = name, api_key = api_key)?;
+                    writeln!(parser_out, "}}")?;
+                }
+                writeln!(parser_out, "}}")?;*/
         Ok(())
     }
 
@@ -1114,7 +1114,7 @@ where
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
-    #[cfg(feature = "regenerate")]
+    // #[cfg(feature = "regenerate")]
     regenerate::main()?;
     if std::env::var("PARSER_FILTER").is_ok() {
         panic!();
